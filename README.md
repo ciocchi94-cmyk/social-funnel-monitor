@@ -54,3 +54,7 @@ In `data.js`: `targets.followerMin/Max` = obiettivo di costo per follower (15–
 Un gruppo viene consigliato "da spegnere" se, con almeno 10 € spesi e 3 giorni di vita, costa oltre 45 cent a follower,
 oppure più di 1,6 volte il migliore, oppure ha speso 5 € senza portare follower. Non vengono mai spenti tutti i gruppi insieme.
 I gruppi con meno di 3 giorni sono "Nuovo · impara" e non vengono giudicati.
+
+## Aggiornamento automatico
+Ogni mattina alle 06:05 (ora italiana) un compito programmato rilegge da Meta gli ultimi giorni, aggiorna solo `data.js` e lo carica su `main`.
+Vercel è collegato a questo repository: ogni push su `main` ripubblica la pagina da solo.
