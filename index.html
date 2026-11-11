@@ -1,0 +1,840 @@
+<!doctype html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#FDFBF7">
+<title>Aura Club · Social funnel</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Montserrat:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  /* palette ufficiale Aura Club */
+  --bg:#FDFBF7; --card:#FFFFFF; --ink:#212121; --mute:#6E6577; --line:#EDE5F1;
+  --lilac:#F4E7FF; --pink:#FFE8FA; --accent:#7B5FA3; --accent-soft:#A68FC1;
+  --g:#2D7A58; --gbg:#DDF0E6; --a:#9C4F22; --abg:#FBE6DA; --r:#A02C4E; --rbg:#F9DCE4;
+  --n:#6E6577; --nbg:#F0EAF3;
+  --sg-bg:#F0F6F2; --sg-bd:#D9E8DF; --sg-ac:#7FAA94; --sg-tx:#2F6B50;
+  --sa-bg:#FBF3EA; --sa-bd:#F0E0CF; --sa-ac:#D2A07C; --sa-tx:#8A5530;
+  --sr-bg:#FAF0F2; --sr-bd:#EED8DE; --sr-ac:#D08A9C; --sr-tx:#93405A;
+  --sn-bg:#F7F2FB; --sn-bd:#E9DFF1; --sn-ac:#B9A5D3; --sn-tx:#6B5788;
+  --hero:linear-gradient(135deg,#F4E7FF 0%,#FFE8FA 100%);
+  --brand:linear-gradient(90deg,#a68fc1,#d0a3cb,#e6aec5,#f1b4b8,#eeb69b);
+  --serif:"Cormorant Garamond","Cormorant",Georgia,"Times New Roman",serif;
+  --sans:"Montserrat","Avenir Next","Segoe UI",system-ui,-apple-system,sans-serif;
+}
+:root[data-theme="dark"]{
+  --bg:#1B1A1D; --card:#252428; --ink:#F4EEF6; --mute:#A99FB4; --line:#38343D;
+  --lilac:#3A3045; --pink:#45303F; --accent:#C9B2E8; --accent-soft:#A68FC1;
+  --g:#7FD1A8; --gbg:#1F3A2E; --a:#F0B08A; --abg:#3D2B22; --r:#F08FA8; --rbg:#402230;
+  --n:#A99FB4; --nbg:#2E2B33;
+  --sg-bg:#222A26; --sg-bd:#2F3A34; --sg-ac:#6FA58B; --sg-tx:#A8D8BF;
+  --sa-bg:#2B2622; --sa-bd:#3A322B; --sa-ac:#C0906C; --sa-tx:#E6B895;
+  --sr-bg:#2C2327; --sr-bd:#3C2F35; --sr-ac:#C47A8F; --sr-tx:#EDA7B8;
+  --sn-bg:#28252E; --sn-bd:#363140; --sn-ac:#8F7EAE; --sn-tx:#C8B9DF;
+  --hero:linear-gradient(135deg,#33293D 0%,#3B2A36 100%);
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1B1A1D; --card:#252428; --ink:#F4EEF6; --mute:#A99FB4; --line:#38343D;
+    --lilac:#3A3045; --pink:#45303F; --accent:#C9B2E8; --accent-soft:#A68FC1;
+    --g:#7FD1A8; --gbg:#1F3A2E; --a:#F0B08A; --abg:#3D2B22; --r:#F08FA8; --rbg:#402230;
+    --n:#A99FB4; --nbg:#2E2B33;
+    --sg-bg:#222A26; --sg-bd:#2F3A34; --sg-ac:#6FA58B; --sg-tx:#A8D8BF;
+    --sa-bg:#2B2622; --sa-bd:#3A322B; --sa-ac:#C0906C; --sa-tx:#E6B895;
+    --sr-bg:#2C2327; --sr-bd:#3C2F35; --sr-ac:#C47A8F; --sr-tx:#EDA7B8;
+    --sn-bg:#28252E; --sn-bd:#363140; --sn-ac:#8F7EAE; --sn-tx:#C8B9DF;
+    --hero:linear-gradient(135deg,#33293D 0%,#3B2A36 100%);
+  }
+}
+*{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--bg);color:var(--ink);font:15px/1.55 var(--sans)}
+main{max-width:720px;margin:0 auto;padding:14px 16px 64px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px;border-radius:8px}
+h1,h2,h3,p{margin:0}
+section{margin-top:30px}
+h2{font-family:var(--serif);font-size:1.55rem;font-weight:700;line-height:1.2;margin-bottom:4px}
+.lead{color:var(--mute);font-size:.88rem;margin-bottom:12px}
+.mute{color:var(--mute)} .small{font-size:.84rem}
+
+/* testata */
+.top{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:6px 0 12px}
+.brand{font-family:var(--serif);font-size:1.7rem;font-weight:700;letter-spacing:.02em;line-height:1}
+.brand span{display:block;font-family:var(--sans);font-size:.74rem;font-weight:500;color:var(--mute);letter-spacing:.04em;margin-top:6px}
+.modebtn{min-height:44px;padding:0 16px;border-radius:22px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:600;font-size:.86rem}
+
+/* pagine */
+.tabs{display:grid;grid-template-columns:repeat(4,1fr);gap:3px;background:var(--nbg);border-radius:26px;padding:4px}
+.tab{min-height:44px;border:0;border-radius:22px;background:none;cursor:pointer;font-weight:600;font-size:.82rem;color:var(--mute);padding:0 4px}
+.tab[aria-current="page"]{background:var(--card);color:var(--ink);box-shadow:0 1px 4px rgba(60,30,90,.12)}
+.pills{display:flex;flex-wrap:wrap;gap:8px;padding:14px 0 4px}
+.pills::-webkit-scrollbar{display:none}
+.pill{flex:0 0 auto;min-height:40px;padding:0 16px;border-radius:20px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-weight:600;font-size:.84rem}
+.pill[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+
+/* verdetto */
+.hero{position:relative;background:var(--hero);border-radius:22px;padding:26px 20px 20px;margin-top:12px;overflow:hidden}
+.hero::before{content:"";position:absolute;inset:0 0 auto 0;height:5px;background:var(--brand)}
+.state{display:flex;align-items:center;gap:10px;font-weight:700;font-size:.9rem;margin-bottom:12px}
+.dot{width:14px;height:14px;border-radius:50%;flex:0 0 auto;background:var(--n)}
+.dot.g{background:var(--g)} .dot.a{background:var(--a)} .dot.r{background:var(--r)}
+.hero .text{font-family:var(--serif);font-size:1.5rem;line-height:1.38;font-weight:500;max-width:30em}
+.hero .text p+p{margin-top:.55em}
+.hero .text b{font-weight:700}
+.hero .src{margin-top:14px;padding-top:12px;border-top:1px solid rgba(110,101,119,.28);font-size:.84rem;color:var(--mute)}
+.hero .src a{color:var(--accent);font-weight:700}
+
+/* tessere */
+.tiles{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:12px}
+.tile{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;min-height:108px}
+.tile .k{font-size:.8rem;color:var(--mute);font-weight:500}
+.tile .v{font-family:var(--serif);font-size:2.05rem;font-weight:700;line-height:1.15;margin:3px 0 2px;display:flex;align-items:center;gap:8px}
+.tile .v .dot{width:11px;height:11px}
+.tile .s{font-size:.78rem;color:var(--mute)}
+.good{color:var(--g)} .bad{color:var(--r)} .warn{color:var(--a)}
+
+/* consigli */
+.advice{display:grid;gap:10px}
+.tip{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 14px 14px 16px;border-left:5px solid var(--accent-soft)}
+.tip.now,.tip.off{border-left-color:var(--r)} .tip.week,.tip.watch{border-left-color:var(--a)}
+.tip .when{display:inline-block;font-size:.72rem;font-weight:700;padding:2px 9px;border-radius:10px;background:var(--nbg);color:var(--n);margin-bottom:6px}
+.tip.now .when,.tip.off .when{background:var(--rbg);color:var(--r)} .tip.week .when,.tip.watch .when{background:var(--abg);color:var(--a)}
+.tip .t{font-weight:700}
+.tip .how{margin-top:4px}
+.tip .why{margin-top:4px;font-size:.84rem;color:var(--mute)}
+
+/* campagne */
+.card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px}
+.camp{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px 14px 6px;margin-bottom:12px}
+.camp .head{display:flex;align-items:flex-start;justify-content:space-between;gap:10px}
+.camp h3{font-family:var(--serif);font-size:1.3rem;font-weight:700;line-height:1.2}
+.chip{display:inline-block;font-size:.72rem;font-weight:700;padding:3px 10px;border-radius:12px;background:var(--nbg);color:var(--n);white-space:nowrap}
+.chip.g{background:var(--gbg);color:var(--g)} .chip.a{background:var(--abg);color:var(--a)} .chip.r{background:var(--rbg);color:var(--r)} .chip.i{background:var(--lilac);color:var(--accent)}
+.big{display:flex;align-items:baseline;gap:8px;margin-top:10px}
+.big b{font-family:var(--serif);font-size:2.4rem;line-height:1;font-weight:700}
+.big span{font-size:.84rem;color:var(--mute)}
+.scale{position:relative;height:10px;border-radius:5px;background:var(--nbg);margin:10px 0 2px}
+.scale .band{position:absolute;top:0;bottom:0;background:var(--g);opacity:.28;border-radius:5px}
+.scale .mk{position:absolute;top:-4px;width:18px;height:18px;margin-left:-9px;border-radius:50%;border:3px solid var(--card);background:var(--n);box-shadow:0 0 0 1px var(--line)}
+.scale .mk.g{background:var(--g)} .scale .mk.a{background:var(--a)} .scale .mk.r{background:var(--r)}
+.ticks{position:relative;height:16px;font-size:.7rem;color:var(--mute)}
+.ticks span{position:absolute;transform:translateX(-50%);white-space:nowrap}
+.facts{display:flex;flex-wrap:wrap;gap:4px 16px;margin-top:8px;font-size:.84rem;color:var(--mute)}
+.facts b{color:var(--ink);font-weight:700}
+.need{margin-top:8px;font-size:.84rem;color:var(--mute)}
+details{margin-top:8px}
+summary{cursor:pointer;min-height:44px;display:flex;align-items:center;font-weight:600;color:var(--accent);list-style:none;font-size:.9rem}
+summary::-webkit-details-marker{display:none}
+summary::before{content:"▸";margin-right:8px;transition:transform .15s}
+details[open]>summary::before{transform:rotate(90deg)}
+.set{--sbg:var(--sn-bg);--sbd:var(--sn-bd);--sac:var(--sn-ac);--stx:var(--sn-tx);margin-top:10px;padding:13px 14px 12px;border-radius:16px;background:var(--sbg);border:1px solid var(--sbd);border-left:5px solid var(--sac)}
+.set.lv-g{--sbg:var(--sg-bg);--sbd:var(--sg-bd);--sac:var(--sg-ac);--stx:var(--sg-tx)}
+.set.lv-a{--sbg:var(--sa-bg);--sbd:var(--sa-bd);--sac:var(--sa-ac);--stx:var(--sa-tx)}
+.set.lv-r{--sbg:var(--sr-bg);--sbd:var(--sr-bd);--sac:var(--sr-ac);--stx:var(--sr-tx)}
+.set .chip{background:transparent;border:1px solid var(--sbd);color:var(--stx);font-weight:600}
+.set .scale{background:var(--sbd);opacity:.95}
+.set .scale .band{background:var(--sg-ac);opacity:.45}
+.set .scale .mk{background:var(--sac);border-color:var(--sbg);box-shadow:0 0 0 1px var(--sbd)}
+.set .facts b{font-weight:600}
+.set .cpf small{color:var(--stx)}
+.camp details{padding-bottom:10px}
+.set .row1{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.set .name{font-weight:600}
+.set .cpf{display:flex;align-items:baseline;gap:8px;margin-top:4px}
+.set .cpf b{font-family:var(--serif);font-size:1.6rem;font-weight:700;line-height:1.1}
+.set .note{margin-top:6px;font-size:.82rem}
+.set.off{opacity:.78;border-style:dashed;border-left-style:solid}
+
+/* grafico */
+.chart svg{width:100%;height:auto;display:block;touch-action:pan-y}
+.readout{margin-top:6px;font-size:.88rem;min-height:1.5em}
+.keyline{display:flex;flex-wrap:wrap;gap:6px 16px;margin-top:8px;font-size:.78rem;color:var(--mute)}
+.keyline i{display:inline-block;width:12px;height:12px;border-radius:3px;vertical-align:-1px;margin-right:5px}
+
+/* form */
+.fform{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-top:12px}
+.fform label,.nform label{display:grid;gap:4px;font-size:.8rem;color:var(--mute);font-weight:500}
+input,select,textarea{border-radius:12px;border:1px solid var(--line);background:var(--bg);padding:0 12px;min-width:0}
+input,select{height:46px}
+textarea{width:100%;min-height:96px;padding:12px;resize:vertical}
+.fform input[type=number]{width:140px}
+.btn{height:46px;padding:0 22px;border-radius:23px;border:0;background:var(--ink);color:var(--bg);font-weight:700;cursor:pointer}
+.btn.soft{background:var(--lilac);color:var(--accent)}
+.flist{list-style:none;margin:12px 0 0;padding:0}
+.flist li{display:flex;justify-content:space-between;align-items:center;padding:6px 0;border-top:1px solid var(--line);font-size:.9rem}
+.flist button,.del{min-width:44px;height:44px;border:0;background:none;color:var(--mute);cursor:pointer;font-size:1.2rem}
+
+/* dettagli */
+.metric{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:16px;margin-bottom:12px}
+.metric .mh{display:flex;justify-content:space-between;align-items:baseline;gap:10px}
+.metric .mt{font-weight:700}
+.metric .mv{font-family:var(--serif);font-size:1.9rem;font-weight:700;line-height:1.1;white-space:nowrap}
+.metric .mtr{font-size:.78rem;text-align:right}
+.metric .what{margin-top:6px;font-size:.88rem}
+.metric .read{margin-top:4px;font-size:.82rem;color:var(--mute)}
+.metric ul{list-style:none;margin:10px 0 0;padding:0}
+.metric li{display:flex;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--line);font-size:.86rem}
+.metric li span:first-child{color:var(--mute)}
+.metric li b{white-space:nowrap}
+
+/* note */
+.nform{display:grid;gap:10px;margin-top:10px}
+.nrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.quick{display:flex;flex-wrap:wrap;gap:8px}
+.quick button{min-height:40px;padding:0 14px;border-radius:20px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:.8rem;font-weight:600}
+.note-item{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px;margin-top:10px}
+.note-item .nh{display:flex;justify-content:space-between;align-items:center;gap:8px}
+.note-item .nd{font-weight:700}
+.note-item p{margin-top:6px;white-space:pre-wrap}
+.note-item .nm{margin-top:6px;font-size:.78rem;color:var(--mute)}
+
+.legend dl{margin:0;display:grid;gap:12px}
+.legend dt{font-weight:700}
+.legend dd{margin:2px 0 0;color:var(--mute);font-size:.88rem}
+footer{margin-top:34px;font-size:.76rem;color:var(--mute);text-align:center}
+footer::before{content:"";display:block;height:3px;border-radius:2px;background:var(--brand);margin:0 auto 14px;width:120px}
+.range{margin-top:10px;padding:14px;border-radius:18px;background:var(--lilac);display:grid;gap:10px}
+.range .rrow{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.range label{display:grid;gap:4px;font-size:.8rem;color:var(--mute);font-weight:600}
+.range input[type=date]{height:46px;width:100%;color:var(--ink);background:var(--card)}
+.range .rq{display:flex;flex-wrap:wrap;gap:8px}
+.range .rq button{min-height:40px;padding:0 14px;border-radius:20px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:.8rem;font-weight:600}
+
+/* chiedi all'AI */
+.sugg{display:flex;flex-wrap:wrap;gap:8px;margin:6px 0 14px}
+.sugg button{min-height:40px;padding:6px 14px;border-radius:20px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-size:.8rem;font-weight:600;text-align:left}
+.chat{display:grid;gap:12px;margin-bottom:14px}
+.msg{display:flex;flex-direction:column;gap:4px;min-width:0}
+.msg.me{align-items:flex-end}
+.msg .who{font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;color:var(--mute);font-weight:600}
+.bub{max-width:92%;padding:11px 14px;border-radius:18px;font-size:.92rem;overflow-wrap:anywhere}
+.msg.me .bub{background:var(--lilac);border-bottom-right-radius:6px;white-space:pre-wrap}
+.msg.ai .bub{background:var(--card);border:1px solid var(--line);border-bottom-left-radius:6px}
+.bub p+p,.bub p+ul,.bub ul+p,.bub p+ol,.bub ol+p{margin-top:8px}
+.bub ul,.bub ol{margin:0;padding-left:20px}
+.bub li{margin-top:4px}
+.typing{color:var(--mute);font-style:italic}
+.aform{display:grid;gap:10px}
+.aform textarea{min-height:76px}
+.aform .arow{display:flex;gap:10px;flex-wrap:wrap}
+.btn[disabled]{opacity:.5;cursor:default}
+.tolink{margin-top:12px}
+.tolink button{min-height:44px;padding:0 18px;border-radius:22px;border:1px solid var(--line);background:var(--lilac);color:var(--accent);font-weight:700;cursor:pointer}
+@media (min-width:560px){.bub{max-width:80%}}
+@media (min-width:560px){.tiles{grid-template-columns:repeat(4,1fr)}.tile .v{font-size:1.8rem}}
+</style>
+</head>
+<body>
+<main id="app"><p class="mute">Caricamento…</p></main>
+<noscript>Serve JavaScript per mostrare i dati.</noscript>
+<script src="data.js"></script>
+<script>
+(function(){
+"use strict";
+const app=document.getElementById("app");
+const D=window.DATA;
+if(!D){app.innerHTML='<p>Non trovo <b>data.js</b>. Deve stare nella stessa cartella di questa pagina.</p>';return;}
+
+/* ================= utilità ================= */
+const store={
+  get(k,d){try{const v=localStorage.getItem(k);return v==null?d:JSON.parse(v);}catch(e){return d;}},
+  set(k,v){try{localStorage.setItem(k,JSON.stringify(v));}catch(e){}}
+};
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+const addDays=(s,n)=>{const d=new Date(s+"T00:00:00Z");d.setUTCDate(d.getUTCDate()+n);return d.toISOString().slice(0,10);};
+const diff=(a,b)=>Math.round((new Date(a+"T00:00:00Z")-new Date(b+"T00:00:00Z"))/864e5);
+const dm=s=>s.slice(8,10)+"/"+s.slice(5,7);
+const localToday=()=>{const d=new Date();return d.getFullYear()+"-"+String(d.getMonth()+1).padStart(2,"0")+"-"+String(d.getDate()).padStart(2,"0");};
+const it=(n,dec)=>n.toLocaleString("it-IT",{minimumFractionDigits:dec,maximumFractionDigits:dec});
+const eur=n=>"€"+it(n,2);
+const num=n=>Math.round(n).toLocaleString("it-IT");
+const pct=(n,dec=1)=>it(n*100,dec)+"%";
+const cents=n=>{const c=n*100;return (c>=100?"€"+it(n,2):(c>=10?String(Math.round(c)):it(c,1))+" cent");};
+
+/* ================= dati ================= */
+const GOAL=D.targets, END=D.updated;
+const camps=D.campaigns.map(c=>({...c,rows:c.rows.map(r=>({d:r[0],sp:r[1],im:r[2],rc:r[3],cl:r[4],rs:r[5],fw:r[6]||0}))}));
+const sets=D.adsets.map(a=>({...a,rows:a.rows.map(r=>({d:r[0],sp:r[1],im:r[2],cl:r[3],rs:r[4],fw:r[5]||0}))}));
+const traffic=camps.filter(c=>c.type==="traffic");
+const leads=camps.filter(c=>c.type==="lead");
+let START=END;
+camps.forEach(c=>c.rows.forEach(r=>{if(r.d<START)START=r.d;}));
+const flat=list=>list.reduce((acc,c)=>acc.concat(c.rows),[]);
+const trafficRows=flat(traffic), leadRows=flat(leads);
+function agg(rows,a,b){
+  const o={sp:0,im:0,cl:0,rs:0,fw:0,days:0};
+  rows.forEach(r=>{if(r.d>=a&&r.d<=b){o.sp+=r.sp;o.im+=r.im;o.cl+=r.cl;o.rs+=r.rs;o.fw+=(r.fw||0);if(r.sp>0)o.days++;}});
+  o.cpv=o.rs>0?o.sp/o.rs:null;
+  o.cpf=o.fw>0?o.sp/o.fw:null;     /* costo per follower reale (dati Meta) */
+  o.fr=o.rs>0?o.fw/o.rs:null;      /* tasso di follow: follower ÷ visite */
+  o.ctr=o.im>0?o.cl/o.im:null;
+  o.cpm=o.im>0?o.sp/o.im*1000:null;
+  o.vpc=o.cl>0?o.rs/o.cl:null;
+  return o;
+}
+
+/* ================= stato ================= */
+const TABS=["oggi","dettagli","note","ai"];
+const state={
+  p:store.get("sfm-p",7),
+  theme:store.get("sfm-t",null),
+  tab:TABS.includes((location.hash||"").slice(1))?location.hash.slice(1):"oggi",
+  open:{},
+  draft:{text:"",tag:"Generale",target:"",date:""}
+};
+if(![0,1,7,14,30,"c"].includes(state.p))state.p=7;
+const PLABEL={1:"Ultimo giorno",7:"7 giorni",14:"14 giorni",30:"30 giorni",0:"Tutto",c:"Scegli date"};
+const clampD=d=>d<START?START:d>END?END:d;
+(function(){const v=store.get("sfm-r",null);let f=v&&typeof v.f==="string"?v.f:addDays(END,-6),t=v&&typeof v.t==="string"?v.t:END;f=clampD(f);t=clampD(t);if(f>t)f=t;state.rf=f;state.rt=t;})();
+const fullD=d=>dm(d)+"/"+d.slice(0,4);
+function range(p){
+  if(p==="c"){const a=state.rf,b=state.rt,n=diff(b,a)+1;let pa=addDays(a,-n),pb=addDays(a,-1);if(pa<START){pa=null;pb=null;}return {a,b,pa,pb,n};}
+  if(p===0)return {a:START,b:END,pa:null,pb:null,n:diff(END,START)+1};
+  const a=addDays(END,-p+1);
+  return {a,b:END,pa:addDays(a,-p),pb:addDays(a,-1),n:p};
+}
+const isDark=()=>state.theme?state.theme==="dark":!!(window.matchMedia&&matchMedia("(prefers-color-scheme: dark)").matches);
+function applyTheme(){
+  const el=document.documentElement;
+  if(state.theme)el.setAttribute("data-theme",state.theme);else el.removeAttribute("data-theme");
+}
+
+/* ================= semafori e tendenze ================= */
+/* Con meno di 5 € spesi il costo per follower non è affidabile. Senza follower dopo 5 € è rosso. */
+function level(a){
+  if(a.sp<5)return "n";
+  if(a.cpf==null)return "r";
+  return a.cpf<=GOAL.followerMax?"g":a.cpf<=GOAL.followerMax*1.3?"a":"r";
+}
+const LWORD={g:"Nel target",a:"Poco sopra",r:"Sopra il target",n:"Presto per dirlo"};
+function trend(cur,prev,minBase){
+  if(prev==null||cur==null||prev<=0||(minBase&&prev<minBase))return null;
+  const p=(cur-prev)/prev*100;
+  return {p,txt:(p>0?"↑ +":p<0?"↓ −":"→ ")+Math.abs(Math.round(p))+"%"};
+}
+const tcls=t=>(!t||Math.abs(t.p)<8)?"":(t.p>0?"bad":"good");
+const cpfText=a=>a.cpf!=null?cents(a.cpf):(a.sp>=5?"nessun follower":"—");
+
+/* ================= consigli pratici ================= */
+function buildAdvice(R){
+  const out=[];
+  const cur=agg(trafficRows,R.a,R.b), prev=R.pa?agg(trafficRows,R.pa,R.pb):null;
+  const lv=level(cur);
+
+  if(diff(localToday(),END)>=2)out.push({pr:"now",t:"I dati non sono aggiornati",how:"Ultimo aggiornamento: "+dm(END)+". Controlla che il compito giornaliero sia ancora attivo.",why:"Con numeri vecchi rischi di decidere sul passato."});
+
+  if(prev&&R.n>=7&&prev.sp>=20&&cur.cpf!=null&&prev.cpf!=null){
+    const t=trend(cur.cpf,prev.cpf,0.001);
+    if(t&&t.p>25){
+      const act=sets.filter(s=>s.status==="ACTIVE").length;
+      out.push({pr:"now",t:"Il costo per follower è salito del "+Math.round(t.p)+"%",how:"Prepara 1–2 contenuti nuovi e provali in un gruppo nuovo. Se hai molti gruppi accesi ("+act+"), controlla che non pescano lo stesso pubblico: si fanno concorrenza e costano di più.",why:"Era "+cents(prev.cpf)+" nei "+R.n+" giorni prima, ora è "+cents(cur.cpf)+". Quando peggiora insieme in quasi tutti i gruppi, di solito il pubblico si è stancato dello stesso contenuto."});
+    }
+  }
+  if(lv==="r"||lv==="a")out.push({pr:"now",t:"Il costo per follower è sopra il tuo obiettivo",how:"Guarda i gruppi segnati «Sopra il target» qui sotto. Spegni i più cari e lascia il budget ai migliori.",why:"Stai pagando "+(cur.cpf!=null?cents(cur.cpf):"troppo")+" a follower, l'obiettivo arriva a "+cents(GOAL.followerMax)+"."});
+
+  /* ---- gruppi da spegnere / da tenere d'occhio ---- */
+  const act=sets.filter(s=>s.status==="ACTIVE"&&diff(END,s.created)>=3);
+  const rows=act.map(s=>({s,c:agg(s.rows,R.a,R.b)})).filter(x=>x.c.sp>=5);
+  const best=rows.filter(x=>x.c.cpf!=null).sort((a,b)=>a.c.cpf-b.c.cpf)[0];
+  const off=[], watch=[];
+  rows.forEach(x=>{
+    const c=x.c, f=c.cpf, rel=(best&&f!=null)?f/best.c.cpf:1;
+    let why=null;
+    if(c.fw===0)why="ha speso "+eur(c.sp)+" e non ha portato nessun follower.";
+    else if(c.sp>=10&&f>GOAL.followerMax*1.3)why="costa "+cents(f)+" a follower ("+num(c.fw)+" follower su "+eur(c.sp)+"), oltre il 30% sopra il tuo massimo di "+cents(GOAL.followerMax)+".";
+    else if(c.sp>=10&&f>GOAL.followerMax&&rel>=1.6)why="costa "+cents(f)+" a follower: "+it(rel,1)+" volte il gruppo migliore ("+cents(best.c.cpf)+").";
+    if(why)off.push({s:x.s,c,f:f==null?9:f,why});
+    else if(f>GOAL.followerMax)watch.push({s:x.s,c,f});
+  });
+  off.sort((a,b)=>b.f-a.f);
+  if(off.length>1&&off.length>=rows.length){
+    off.length=1;
+    out.push({pr:"week",t:"Tutti i gruppi sono sopra il target: serve una creatività nuova",how:"Non spegnerli tutti. Spegni solo il più caro e prepara 1–2 contenuti diversi da provare in un gruppo nuovo.",why:"Se costano tutti troppo, il problema è di solito il contenuto o il pubblico, non un gruppo solo."});
+  }
+  off.forEach(x=>out.push({pr:"off",t:"Spegni «"+x.s.name+"»",how:"In Meta apri il gruppo e premi Pausa. Sposta il suo budget sul gruppo migliore. Poi scrivilo in Note.",why:x.why}));
+  if(!off.length&&rows.length)out.push({pr:"later",t:"Nessun gruppo da spegnere ora",how:"Nessun gruppo con almeno €10 di spesa supera il tuo massimo di "+cents(GOAL.followerMax)+" di oltre il 30%.",why:"Regola: spegni un gruppo quando, con almeno €10 spesi e 3 giorni di vita, costa più di "+cents(GOAL.followerMax*1.3)+" a follower, oppure più di 1,6 volte il migliore, oppure ha speso senza portare follower."});
+  if(watch.length)out.push({pr:"watch",t:watch.map(x=>"«"+x.s.name+"»").join(", ")+(watch.length>1?" sono poco sopra il target":" è poco sopra il target"),how:"Non spegnerli ancora. Guarda di nuovo tra 2–3 giorni: se salgono oltre "+cents(GOAL.followerMax*1.3)+" a follower, vanno in pausa.",why:watch.map(x=>"«"+x.s.name+"» "+cents(x.f)).join(" · ")+" a follower."});
+  const good=rows.filter(x=>x.c.cpf!=null&&x.c.cpf<=GOAL.followerMax&&x.c.sp>=10).sort((a,b)=>a.c.cpf-b.c.cpf)[0];
+  if(good)out.push({pr:"week",t:"Alza il budget di «"+good.s.name+"» del 20%",how:"Da "+eur(good.s.budget)+" a "+eur(good.s.budget*1.2)+" al giorno. Non di più in una volta, poi aspetta 2–3 giorni.",why:"È nel tuo obiettivo: "+cents(good.c.cpf)+" a follower ("+num(good.c.fw)+" follower). Se alzi troppo il budget, Meta riparte da zero a imparare."});
+
+  sets.filter(s=>s.status==="ACTIVE").forEach(s=>{
+    const c=agg(s.rows,R.a,R.b);
+    if(diff(END,s.created)>=2&&c.sp===0&&R.n>=2)out.push({pr:"week",t:"«"+s.name+"» non sta spendendo",how:"Apri il gruppo in Meta e guarda se c'è un avviso (revisione, budget, pubblico troppo stretto).",why:"È attivo ma nel periodo non ha speso nulla."});
+    if(diff(END,s.created)>=3&&c.cl>=100&&c.rs>0&&c.cl/c.rs>2.5)out.push({pr:"week",t:"Cambia l'inizio della creatività di «"+s.name+"»",how:"Prova una prima frase o un video diverso. Controlla anche che il pulsante porti al profilo.",why:"Ha "+num(c.cl)+" click ma solo "+num(c.rs)+" visite al profilo: molti click non arrivano da te."});
+  });
+
+  const fresh=sets.filter(s=>s.status==="ACTIVE"&&diff(END,s.created)<3);
+  if(fresh.length)out.push({pr:"later",t:"Non giudicare ancora i gruppi nuovi",how:"Aspetta 3–4 giorni: "+fresh.map(s=>"«"+s.name+"»").join(", ")+".",why:"All'inizio Meta sta imparando e pochi follower fanno ballare il costo."});
+
+  const budget=sets.filter(s=>s.status==="ACTIVE"&&s.created<=END).reduce((a,s)=>a+s.budget,0);
+  const last=agg(trafficRows,END,END).sp;
+  if(budget>0&&last>0&&last<budget*0.7)out.push({pr:"later",t:"Stai spendendo meno del budget",how:"Budget attivo "+eur(budget)+" al giorno, speso nell'ultimo giorno "+eur(last)+". Se continua per più giorni, allarga il pubblico.",why:"Meta non spende tutto quando non trova abbastanza persone adatte."});
+  leads.forEach(c=>{if(c.status==="PAUSED")out.push({pr:"later",t:"Decidi cosa fare con le candidature",how:"La campagna «"+c.name+"» è in pausa. Riattivala solo quando vuoi altre candidature.",why:"Finché è ferma non arrivano nuove candidature."});});
+
+  const order={now:0,off:1,week:2,watch:3,later:4};
+  out.sort((a,b)=>order[a.pr]-order[b.pr]);
+  return out.slice(0,8);
+}
+
+/* ================= componenti ================= */
+function scale(c,lv,withTicks){
+  const MAX=1.0, l=GOAL.followerMin/MAX*100, w=(GOAL.followerMax-GOAL.followerMin)/MAX*100;
+  const pos=c==null?null:Math.min(1,c/MAX)*100;
+  let h='<div class="scale" aria-hidden="true"><i class="band" style="left:'+l+'%;width:'+w+'%"></i>'+(pos!=null?'<i class="mk '+(lv==="n"?"":lv)+'" style="left:'+pos+'%"></i>':'')+'</div>';
+  if(withTicks)h+='<div class="ticks" aria-hidden="true"><span style="left:'+l+'%">'+Math.round(GOAL.followerMin*100)+'</span><span style="left:'+(l+w)+'%">'+Math.round(GOAL.followerMax*100)+'</span><span style="left:100%;transform:translateX(-100%)">1 €+</span></div>';
+  return h;
+}
+function tile(k,v,s,lv){
+  return '<div class="tile"><div class="k">'+k+'</div><div class="v">'+(lv?'<span class="dot '+(lv==="n"?"":lv)+'"></span>':'')+v+'</div><div class="s">'+s+'</div></div>';
+}
+function setCard(s,R){
+  const cur=agg(s.rows,R.a,R.b), prev=R.pa?agg(s.rows,R.pa,R.pb):null;
+  const age=diff(END,s.created), isNew=age<3;
+  const lv=isNew?"n":level(cur);
+  const t=prev&&prev.sp>=5&&cur.sp>=5&&prev.cpf!=null&&cur.cpf!=null?trend(cur.cpf,prev.cpf,0.001):null;
+  let chip;
+  if(s.created>END)chip='<span class="chip i">Appena creato</span>';
+  else if(s.status==="PAUSED")chip='<span class="chip">In pausa</span>';
+  else if(isNew)chip='<span class="chip i">Nuovo · impara</span>';
+  else chip='<span class="chip '+(lv==="n"?"":lv)+'">'+LWORD[lv]+'</span>';
+  const off=(s.status==="PAUSED"||s.created>END)&&cur.sp===0?" off":"";
+  const notes=[];
+  if(cur.cl>=100&&cur.rs>0&&cur.cl/cur.rs>2.5)notes.push("Tanti click ("+num(cur.cl)+") rispetto alle visite ("+num(cur.rs)+").");
+  if(s.status==="ACTIVE"&&cur.sp===0&&s.created<=END&&age>=2)notes.push("Attivo ma senza spesa nel periodo.");
+  return '<div class="set lv-'+(s.status==="PAUSED"?"n":(lv==="n"?"n":lv))+off+'"><div class="row1"><span class="name">'+esc(s.name)+'</span>'+chip+'</div>'+
+    '<div class="cpf"><b>'+cpfText(cur)+'</b><span class="small mute">a follower'+(t?' · <span class="'+tcls(t)+'">'+t.txt+'</span>':'')+'</span></div>'+
+    scale(cur.cpf,lv,false)+
+    '<div class="facts"><span><b>'+eur(cur.sp)+'</b> spesi</span><span><b>'+num(cur.fw)+'</b> follower</span><span><b>'+num(cur.rs)+'</b> visite</span>'+(cur.fr!=null?'<span><b>'+pct(cur.fr,0)+'</b> visite → follower</span>':'')+(s.status==="ACTIVE"?'<span>budget '+eur(s.budget)+'/giorno</span>':'')+'</div>'+
+    (notes.length?'<p class="note warn">'+esc(notes.join(" "))+'</p>':'')+'</div>';
+}
+function campaignCard(c,R){
+  const cur=agg(c.rows,R.a,R.b), prev=R.pa?agg(c.rows,R.pa,R.pb):null;
+  const lv=level(cur);
+  const t=prev&&prev.sp>=5&&cur.sp>=5&&prev.cpf!=null&&cur.cpf!=null?trend(cur.cpf,prev.cpf,0.001):null;
+  const mySets=sets.filter(s=>s.campaign===c.id).sort((a,b)=>{
+    const ax=a.status==="ACTIVE"?1:0, ay=b.status==="ACTIVE"?1:0;
+    return (ay-ax)||(agg(b.rows,R.a,R.b).sp-agg(a.rows,R.a,R.b).sp);
+  });
+  const chip=c.status==="ACTIVE"?'<span class="chip '+(lv==="n"?"":lv)+'">'+(cur.sp>0?LWORD[lv]:"Attiva")+'</span>':'<span class="chip">In pausa</span>';
+  const need=cur.cpv!=null?cur.cpv/GOAL.followerMax:null;
+  let h='<article class="camp"><div class="head"><h3>'+esc(c.name)+'</h3>'+chip+'</div>'+
+    '<div class="big"><b>'+cpfText(cur)+'</b><span>a follower'+(t?' · <span class="'+tcls(t)+'">'+t.txt+' vs prima</span>':'')+'</span></div>'+
+    scale(cur.cpf,lv,true)+
+    '<div class="facts"><span><b>'+eur(cur.sp)+'</b> spesi</span><span><b>'+num(cur.fw)+'</b> follower</span><span><b>'+num(cur.rs)+'</b> visite</span></div>'+
+    (need!=null&&cur.fr!=null?'<p class="need">Oggi segue il <b>'+pct(cur.fr,0)+'</b> di chi visita il profilo. Per stare sotto '+cents(GOAL.followerMax)+' dovrebbe seguire almeno il <b>'+pct(need,0)+'</b>.</p>':'');
+  if(mySets.length){
+    const key="c"+c.id, open=state.open[key]!==false;
+    h+='<details data-key="'+key+'"'+(open?" open":"")+'><summary>Gruppi di annunci ('+mySets.length+')</summary>'+mySets.map(s=>setCard(s,R)).join("")+'</details>';
+  }
+  return h+'</article>';
+}
+
+/* ================= grafico: costo per follower reale, media mobile 3 giorni ================= */
+const noteList=()=>store.get("sfm-n",[]);
+function chartHTML(R){
+  const to=state.p==="c"?R.b:END;
+  let from=state.p===0?START:state.p==="c"?(diff(to,R.a)>=6?R.a:addDays(to,-6)):(diff(R.b,R.a)>=13?R.a:addDays(END,-13));
+  if(diff(to,from)>89)from=addDays(to,-89);
+  if(from<START)from=START;
+  const pts=[];
+  for(let d=from,i=0;d<=to;d=addDays(d,1),i++){
+    const w=agg(trafficRows,addDays(d,-2),d), g=agg(trafficRows,d,d);
+    pts.push({d,i,sp:g.sp,fw:g.fw,v:(w.fw>0&&w.sp>=5)?w.cpf:null});
+  }
+  const vals=pts.filter(p=>p.v!=null);
+  if(vals.length<2)return '<div class="card"><p class="mute">Servono almeno due giorni con dati.</p></div>';
+  const mx=Math.max(GOAL.followerMax*2,Math.min(2,Math.max(...vals.map(p=>p.v))*1.1));
+  const W=640,H=215,L=48,Rr=12,Tp=14,B=30,iw=W-L-Rr,ih=H-Tp-B;
+  const X=i=>L+(pts.length===1?0:i/(pts.length-1))*iw, Y=v=>Tp+ih-(Math.min(v,mx)/mx)*ih;
+  let s='<svg id="chartsvg" viewBox="0 0 '+W+' '+H+'" role="img" aria-label="Costo per follower giorno per giorno">';
+  s+='<rect x="'+L+'" y="'+Y(GOAL.followerMax)+'" width="'+iw+'" height="'+(Y(0)-Y(GOAL.followerMax))+'" fill="var(--g)" opacity=".16"/>';
+  s+='<rect x="'+L+'" y="'+Y(GOAL.followerMax*1.3)+'" width="'+iw+'" height="'+(Y(GOAL.followerMax)-Y(GOAL.followerMax*1.3))+'" fill="var(--a)" opacity=".18"/>';
+  s+='<rect x="'+L+'" y="'+Y(mx)+'" width="'+iw+'" height="'+(Y(GOAL.followerMax*1.3)-Y(mx))+'" fill="var(--r)" opacity=".13"/>';
+  s+='<line x1="'+L+'" x2="'+(L+iw)+'" y1="'+Y(GOAL.followerMin)+'" y2="'+Y(GOAL.followerMin)+'" stroke="var(--g)" stroke-dasharray="4 4" opacity=".6"/>';
+  [0,GOAL.followerMin,GOAL.followerMax,Math.round(mx*10)/10].forEach(v=>{s+='<text x="'+(L-6)+'" y="'+(Y(v)+4)+'" text-anchor="end" font-size="11" fill="var(--mute)">'+(v===0?"0":Math.round(v*100))+'</text>';});
+  s+='<text x="'+(L-6)+'" y="'+(Tp-3)+'" text-anchor="end" font-size="10" fill="var(--mute)">cent</text>';
+  let path="",pen=false;
+  pts.forEach(p=>{if(p.v==null){pen=false;return;}path+=(pen?"L":"M")+X(p.i).toFixed(1)+" "+Y(p.v).toFixed(1)+" ";pen=true;});
+  s+='<path d="'+path+'" fill="none" stroke="var(--accent)" stroke-width="2.6" stroke-linejoin="round" stroke-linecap="round"/>';
+  const r=pts.length>35?2:3.2;
+  pts.forEach(p=>{if(p.v!=null)s+='<circle cx="'+X(p.i).toFixed(1)+'" cy="'+Y(p.v).toFixed(1)+'" r="'+r+'" fill="var(--accent)"/>';});
+  const noteByDate={};
+  noteList().forEach(n=>{noteByDate[n.date]=(noteByDate[n.date]||[]).concat(n);});
+  pts.forEach(p=>{if(noteByDate[p.d]){const x=X(p.i),y=Tp+ih+8;s+='<path d="M'+x+' '+(y-5)+' L'+(x+5)+' '+y+' L'+x+' '+(y+5)+' L'+(x-5)+' '+y+' Z" fill="var(--a)"/>';}});
+  [0,Math.floor((pts.length-1)/2),pts.length-1].forEach((k,j)=>{s+='<text x="'+X(k)+'" y="'+(H-3)+'" text-anchor="'+(j===0?"start":j===2?"end":"middle")+'" font-size="11" fill="var(--mute)">'+dm(pts[k].d)+'</text>';});
+  s+='<line id="cursor" x1="0" x2="0" y1="'+Tp+'" y2="'+(Tp+ih)+'" stroke="var(--ink)" stroke-width="1" opacity="0"/>';
+  s+='<rect id="hit" x="'+L+'" y="'+Tp+'" width="'+iw+'" height="'+ih+'" fill="transparent"/></svg>';
+  window.__chart={pts,X,L,iw,W,noteByDate};
+  return '<div class="card chart">'+s+'<p class="readout" id="readout" aria-live="polite"></p>'+
+    '<div class="keyline"><span><i style="background:var(--g);opacity:.5"></i>nel target ('+Math.round(GOAL.followerMin*100)+'–'+Math.round(GOAL.followerMax*100)+' cent)</span><span><i style="background:var(--a);opacity:.5"></i>poco sopra</span><span><i style="background:var(--r);opacity:.45"></i>sopra il target</span><span>◆ tua nota</span></div></div>';
+}
+function bindChart(){
+  const c=window.__chart, svg=document.getElementById("chartsvg");
+  if(!c||!svg)return;
+  const ro=document.getElementById("readout"), cur=document.getElementById("cursor");
+  function show(p){
+    if(!p||p.v==null){ro.textContent="";return;}
+    let t='<b>'+dm(p.d)+'</b> · media 3 giorni '+cents(p.v)+' a follower · quel giorno '+eur(p.sp)+' spesi, '+num(p.fw)+' follower';
+    (c.noteByDate[p.d]||[]).forEach(n=>{t+='<br><span class="warn">◆ '+esc(n.text.length>90?n.text.slice(0,90)+"…":n.text)+'</span>';});
+    ro.innerHTML=t;cur.setAttribute("x1",c.X(p.i));cur.setAttribute("x2",c.X(p.i));cur.setAttribute("opacity",".35");
+  }
+  function at(ev){
+    const r=svg.getBoundingClientRect(), x=(ev.clientX-r.left)/r.width*c.W;
+    let k=Math.round((x-c.L)/c.iw*(c.pts.length-1));k=Math.max(0,Math.min(c.pts.length-1,k));
+    let p=c.pts[k];
+    if(p.v==null){for(let o=1;o<4;o++){const q=c.pts[k-o]||c.pts[k+o];if(q&&q.v!=null){p=q;break;}}}
+    show(p);
+  }
+  svg.addEventListener("pointermove",at);svg.addEventListener("pointerdown",at);
+  show(c.pts.filter(p=>p.v!=null).pop());
+}
+
+/* ================= fasce temporali scelte da te ================= */
+function setRange(f,t){f=clampD(f);t=clampD(t);if(f>t)f=t;state.rf=f;state.rt=t;store.set("sfm-r",{f,t});render();}
+function quickRange(k){
+  const e=new Date(END+"T00:00:00Z");
+  if(k==="week"){const wd=(e.getUTCDay()+6)%7;return [addDays(END,-wd),END];}
+  if(k==="month")return [END.slice(0,8)+"01",END];
+  if(k==="lastmonth"){const first=new Date(Date.UTC(e.getUTCFullYear(),e.getUTCMonth()-1,1)),last=new Date(Date.UTC(e.getUTCFullYear(),e.getUTCMonth(),0));return [first.toISOString().slice(0,10),last.toISOString().slice(0,10)];}
+  return [addDays(END,-6),END];
+}
+function rangePanel(R){
+  return '<div class="range"><div class="rrow"><label>Dal<input type="date" id="rf" value="'+state.rf+'" min="'+START+'" max="'+END+'"></label><label>Al<input type="date" id="rt" value="'+state.rt+'" min="'+START+'" max="'+END+'"></label></div>'+
+    '<div class="rq"><button data-rq="week">Questa settimana</button><button data-rq="month">Questo mese</button><button data-rq="lastmonth">Mese scorso</button></div>'+
+    '<p class="small mute">'+(R.n===1?'Un solo giorno: ':R.n+' giorni: ')+fullD(R.a)+(R.n>1?' – '+fullD(R.b):'')+'. '+(R.pa?'Confronto con i '+R.n+' giorni prima ('+dm(R.pa)+' – '+dm(R.pb)+').':'Prima di questo periodo non ho dati per fare il confronto.')+' Dati disponibili dal '+fullD(START)+' al '+fullD(END)+'.</p></div>';
+}
+
+/* ================= PAGINA 1 · OGGI ================= */
+function pageOggi(R){
+  const cur=agg(trafficRows,R.a,R.b), prev=R.pa?agg(trafficRows,R.pa,R.pb):null;
+  const lv=level(cur);
+  const t=prev&&prev.sp>=5&&prev.cpf!=null&&cur.cpf!=null?trend(cur.cpf,prev.cpf,0.001):null;
+  let h='';
+
+  h+='<div class="hero"><div class="state"><span class="dot '+(lv==="n"?"":lv)+'"></span>'+LWORD[lv]+'</div><div class="text">';
+  if(cur.sp===0){h+='<p>In questo periodo non hai speso nulla sulle campagne di traffico.</p>';}
+  else if(cur.cpf==null){h+='<p>Hai speso <b>'+eur(cur.sp)+'</b> e Meta non ha segnato nessun follower dagli annunci.</p>';}
+  else{
+    h+='<p>'+(state.p===1?"Nell'ultimo giorno":state.p===0?"In tutto il periodo":state.p==="c"?(R.n===1?"Il "+fullD(R.a):"Dal "+dm(R.a)+" al "+dm(R.b)):"In "+R.n+" giorni")+' hai speso <b>'+eur(cur.sp)+'</b> e ti sono arrivati <b>'+num(cur.fw)+'</b> follower: ognuno ti costa <b>'+cents(cur.cpf)+'</b>.</p>';
+    const gap=cur.cpf-GOAL.followerMax;
+    h+='<p>Il tuo obiettivo è <b>'+Math.round(GOAL.followerMin*100)+'–'+Math.round(GOAL.followerMax*100)+' cent</b>: '+(gap<=0?(cur.cpf<GOAL.followerMin?"sei sotto, ottimo.":"sei dentro."):"sei sopra di "+cents(gap)+".")+'</p>';
+    if(t&&Math.abs(t.p)>=8)h+='<p>Rispetto ai '+R.n+' giorni prima il costo '+(t.p>0?"è salito":"è sceso")+' del '+Math.abs(Math.round(t.p))+'% (era '+cents(prev.cpf)+').</p>';
+  }
+  h+='</div><p class="src">Dato reale di Meta: i follower sono quelli che Instagram attribuisce ai tuoi annunci, entro 1 giorno dal click. Il costo vero può essere un po\' più basso.'+(cur.fr!=null?' '+pct(cur.fr,0)+' delle visite diventa follower.':'')+'</p></div>';
+
+  const ld=agg(leadRows,R.a,R.b);
+  const tsp=prev?trend(cur.sp,prev.sp,1):null;
+  h+='<div class="tiles">'+
+    tile("Costo per follower",cur.cpf!=null?cents(cur.cpf):"—",'obiettivo '+Math.round(GOAL.followerMin*100)+'–'+Math.round(GOAL.followerMax*100)+' cent',cur.sp>0?lv:null)+
+    tile("Follower arrivati",num(cur.fw),'attribuiti agli annunci')+
+    tile("Spesa traffico",eur(cur.sp),tsp?'<span>'+tsp.txt+' vs prima</span>':'campagne di traffico')+
+    tile("Tasso di follow",cur.fr!=null?pct(cur.fr,0):"—",'visite che diventano follower')+
+  '</div>';
+
+  const pastR=state.p==="c"&&R.b<END, adv=buildAdvice(pastR?range(7):R);
+  h+='<section><h2>Cosa fare adesso</h2><p class="lead">In ordine di importanza. Fai solo il primo, poi guarda il resto.'+(pastR?' Questi consigli usano gli ultimi 7 giorni, non il periodo scelto.':'')+'</p><div class="advice">'+adv.map(a=>
+    '<div class="tip '+a.pr+'"><span class="when">'+({now:"Subito",off:"Da spegnere",week:"Questa settimana",watch:"Tieni d'occhio",later:"Quando puoi"})[a.pr]+'</span><div class="t">'+esc(a.t)+'</div><div class="how">'+esc(a.how)+'</div><div class="why">Perché: '+esc(a.why)+'</div></div>'
+  ).join("")+(adv.length?'':'<div class="card">Nessuna azione urgente. Tutto sotto controllo.</div>')+'</div><div class="tolink"><button data-tab="ai">Non ti è chiaro? Chiedilo all\'AI →</button></div></section>';
+
+  const shown=traffic.filter(c=>c.status==="ACTIVE"||agg(c.rows,R.a,R.b).sp>0), hidden=traffic.length-shown.length;
+  h+='<section><h2>Costo per follower di ogni campagna</h2><p class="lead">Spesa divisa per i follower che Meta attribuisce a quella campagna o a quel gruppo. Il pallino sulla barra mostra dove sei: la zona verde è il tuo obiettivo.</p>'+
+    shown.map(c=>campaignCard(c,R)).join("")+
+    (hidden>0?'<p class="small mute">Altre '+hidden+(hidden===1?' campagna ferma, senza spesa in questo periodo.':' campagne ferme, senza spesa in questo periodo.')+'</p>':'')+'</section>';
+
+  if(leads.length){
+    h+='<section><h2>Candidature</h2>'+leads.map(c=>{
+      const a=agg(c.rows,R.a,R.b), p=R.pa?agg(c.rows,R.pa,R.pb):null, tr=p&&p.sp>=5&&a.sp>=5?trend(a.cpv,p.cpv,0.001):null;
+      return '<article class="camp"><div class="head"><h3>'+esc(c.name)+'</h3><span class="chip">'+(c.status==="ACTIVE"?"Attiva":"In pausa")+'</span></div>'+
+        '<div class="big"><b>'+num(a.rs)+'</b><span>candidature · '+(a.cpv!=null?eur(a.cpv)+' l\'una':'—')+(tr?' · <span class="'+tcls(tr)+'">'+tr.txt+'</span>':'')+'</span></div>'+
+        '<div class="facts"><span><b>'+eur(a.sp)+'</b> spesi</span></div>'+
+        '<p class="small mute" style="margin:10px 0 8px">Questa campagna porta persone a compilare la candidatura, non follower: sta fuori dal conto del costo per follower.</p></article>';
+    }).join("")+'</section>';
+  }
+
+  h+='<section><h2>Giorno per giorno</h2><p class="lead">Costo per follower, media degli ultimi 3 giorni. Tocca il grafico per leggere un giorno.</p>'+chartHTML(R)+'</section>';
+  return h;
+}
+
+/* ================= PAGINA 2 · DETTAGLI ================= */
+function metricBlock(o){
+  return '<div class="metric"><div class="mh"><span class="mt">'+o.title+'</span><span class="mv">'+o.value+'</span></div>'+
+    (o.trend?'<div class="mtr">'+o.trend+'</div>':'')+
+    '<p class="what">'+o.what+'</p><p class="read">'+o.read+'</p>'+
+    (o.rows&&o.rows.length?'<ul>'+o.rows.map(r=>'<li><span>'+esc(r[0])+'</span><b>'+r[1]+'</b></li>').join("")+'</ul>':'')+'</div>';
+}
+function pageDettagli(R){
+  const cur=agg(trafficRows,R.a,R.b), prev=R.pa?agg(trafficRows,R.pa,R.pb):null;
+  const act=sets.map(s=>({s,c:agg(s.rows,R.a,R.b)})).filter(x=>x.c.sp>0).sort((a,b)=>b.c.sp-a.c.sp);
+  const tr=(a,b,min,flip)=>{const t=trend(a,b,min);if(!t)return "";const cls=(Math.abs(t.p)<8)?"":(((t.p>0)!==!!flip)?"bad":"good");return '<span class="'+cls+'">'+t.txt+' vs prima</span>';};
+  const rows=fn=>act.map(x=>{const v=fn(x.c);return v==null?null:[x.s.name,v];}).filter(Boolean);
+  const budget=sets.filter(s=>s.status==="ACTIVE"&&s.created<=END).reduce((a,s)=>a+s.budget,0);
+  let h='<section style="margin-top:18px"><h2>Tutti gli altri numeri</h2><p class="lead">Meno importanti del costo per follower, ma ti dicono perché qualcosa va bene o male. Sotto ogni numero c\'è la spiegazione e il dettaglio di ogni gruppo.</p>';
+
+  h+=metricBlock({title:"Follower attribuiti",value:num(cur.fw),trend:prev?tr(cur.fw,prev.fw,1,true):"",
+    what:"Persone che hanno iniziato a seguirti dopo aver visto o cliccato un tuo annuncio. Il numero lo dà Meta.",
+    read:"Conta solo chi ti segue entro 1 giorno dal click: i follower che arrivano dopo non sono contati, quindi il numero è prudente.",
+    rows:rows(c=>num(c.fw))});
+
+  h+=metricBlock({title:"Tasso di follow",value:cur.fr!=null?pct(cur.fr,0):"—",trend:prev?tr(cur.fr,prev.fr,0.0001,true):"",
+    what:"Su 100 persone che entrano nel profilo, quante ti seguono.",
+    read:"Per stare nel tuo obiettivo di "+Math.round(GOAL.followerMax*100)+" cent"+(cur.cpv!=null?", con un costo per visita di "+cents(cur.cpv)+" serve almeno "+pct(cur.cpv/GOAL.followerMax,0)+".":"."),
+    rows:rows(c=>c.fr!=null?pct(c.fr,0):null)});
+
+  h+=metricBlock({title:"Visite al profilo",value:num(cur.rs),trend:prev?tr(cur.rs,prev.rs,1,true):"",
+    what:"Persone che dopo aver visto l'annuncio sono entrate sul tuo profilo Instagram.",
+    read:"È il passaggio prima del follow. Tante visite e pochi follower vogliono dire che il profilo o il contenuto non convincono.",
+    rows:rows(c=>num(c.rs))});
+
+  h+=metricBlock({title:"Costo per visita",value:cur.cpv!=null?cents(cur.cpv):"—",trend:prev?tr(cur.cpv,prev.cpv,0.001):"",
+    what:"Quanto spendi per ogni persona che entra sul profilo.",
+    read:"Costo per visita ÷ tasso di follow = costo per follower. Una visita economica non basta se poi non ti seguono.",
+    rows:rows(c=>c.cpv!=null?cents(c.cpv):null)});
+
+  h+=metricBlock({title:"Spesa media al giorno",value:cur.days?eur(cur.sp/cur.days):"—",trend:prev&&prev.days?tr(cur.sp/Math.max(cur.days,1),prev.sp/Math.max(prev.days,1),1,true):"",
+    what:"Quanti euro spendi in media ogni giorno sulle campagne di traffico.",
+    read:"Confrontala con il budget impostato nei gruppi attivi: "+eur(budget)+" al giorno. Se spendi molto meno, Meta non trova abbastanza persone.",
+    rows:rows(c=>c.days?eur(c.sp/c.days):null)});
+
+  h+=metricBlock({title:"Impression",value:num(cur.im),trend:prev?tr(cur.im,prev.im,1,true):"",
+    what:"Quante volte gli annunci sono stati mostrati. Non sono persone: la stessa persona può vederlo più volte.",
+    read:"Più impression con lo stesso budget vuol dire che paghi meno ogni visualizzazione.",
+    rows:rows(c=>num(c.im))});
+
+  h+=metricBlock({title:"Costo ogni 1.000 impression (CPM)",value:cur.cpm!=null?eur(cur.cpm):"—",trend:prev?tr(cur.cpm,prev.cpm,1):"",
+    what:"Quanto paghi per far vedere l'annuncio 1.000 volte.",
+    read:"Se sale mentre il resto non cambia, il pubblico si sta saturando: serve una creatività nuova o un pubblico diverso.",
+    rows:rows(c=>c.cpm!=null?eur(c.cpm):null)});
+
+  h+=metricBlock({title:"Click",value:num(cur.cl),trend:prev?tr(cur.cl,prev.cl,1,true):"",
+    what:"Tutti i click sull'annuncio, non solo quelli verso il profilo: contano anche espandi testo, like, commenti.",
+    read:"Da solo non dice se va bene: guarda la riga «Visite ogni 100 click» qui sotto.",
+    rows:rows(c=>num(c.cl))});
+
+  h+=metricBlock({title:"Click ogni 100 visualizzazioni (CTR)",value:cur.ctr!=null?pct(cur.ctr,1):"—",trend:prev?tr(cur.ctr,prev.ctr,0.0001,true):"",
+    what:"Su 100 volte che l'annuncio compare, quante persone cliccano.",
+    read:"Più alto = la creatività attira. Se è basso, cambia il primo secondo del video o la prima frase.",
+    rows:rows(c=>c.ctr!=null?pct(c.ctr,1):null)});
+
+  h+=metricBlock({title:"Visite ogni 100 click",value:cur.vpc!=null?it(cur.vpc*100,0):"—",trend:prev?tr(cur.vpc,prev.vpc,0.0001,true):"",
+    what:"Su 100 click, quante diventano una vera visita al profilo.",
+    read:"Se è molto sotto 100, parte dei click non arriva da te (tocchi sul video, like, espandi testo). Con un gruppo molto sotto gli altri, cambia l'inizio della creatività.",
+    rows:rows(c=>c.vpc!=null?it(c.vpc*100,0):null)});
+
+  h+=metricBlock({title:"Giorni con spesa",value:cur.days+" su "+R.n,trend:"",
+    what:"In quanti giorni del periodo gli annunci hanno speso davvero.",
+    read:"Se sono meno dei giorni del periodo, ci sono stati giorni fermi (pausa o gruppi bloccati).",
+    rows:rows(c=>c.days+" su "+R.n)});
+
+  const fr=traffic.map(c=>{const r=c.rows.filter(x=>x.d===END)[0];return r&&r.rc>0?[c.name,r.im/r.rc,r.rc]:null;}).filter(Boolean);
+  if(fr.length){
+    h+=metricBlock({title:"Quante volte la stessa persona vede l'annuncio",value:it(fr[0][1],2)+"×",trend:"",
+      what:"Ultimo giorno: impression diviso persone raggiunte. Dice quante volte, in media, la stessa persona ha visto l'annuncio.",
+      read:"Sopra 2–3 volte nello stesso giorno il pubblico inizia a stancarsi. Sotto va bene.",
+      rows:fr.map(x=>[x[0]+" · "+num(x[2])+" persone",it(x[1],2)+"×"])});
+  }
+  if(leads.length){
+    const ld=agg(leadRows,R.a,R.b), lp=R.pa?agg(leadRows,R.pa,R.pb):null;
+    h+=metricBlock({title:"Candidature ricevute",value:num(ld.rs),trend:lp?tr(ld.rs,lp.rs,1,true):"",
+      what:"Persone che hanno compilato il modulo della campagna leadgen. Non sono follower.",
+      read:"Costo medio: "+(ld.cpv!=null?eur(ld.cpv)+" a candidatura":"—")+". Per questa campagna conta quanto costa una candidatura, non il follower.",
+      rows:leads.map(c=>{const a=agg(c.rows,R.a,R.b);return [c.name,num(a.rs)+" · "+eur(a.sp)];})});
+  }
+  h+='</section>';
+
+  h+='<section class="legend"><details><summary>Piccolo vocabolario</summary><dl>'+
+    '<div><dt>Gruppo di annunci</dt><dd>Una parte della campagna con il suo pubblico e il suo budget. Ognuno è giudicato da solo.</dd></div>'+
+    '<div><dt>Nuovo · impara</dt><dd>Gruppo creato da meno di 3 giorni: Meta sta ancora capendo a chi mostrarlo. Non giudicarlo subito. Anche le campagne verso il profilo hanno questa fase, ma di solito dura 1–3 giorni.</dd></div>'+
+    '<div><dt>Presto per dirlo</dt><dd>Con meno di 5 € spesi pochi follower cambiano molto il costo: il numero non è ancora affidabile.</dd></div>'+
+    '<div><dt>Follower attribuiti</dt><dd>Follower che Meta lega all\'annuncio entro 1 giorno dal click. Quelli che arrivano più tardi o da altre fonti non sono contati.</dd></div>'+
+    '</dl></details></section>';
+  return h;
+}
+
+/* ================= PAGINA 3 · NOTE ================= */
+function pageNote(){
+  const notes=noteList().slice().sort((a,b)=>b.date.localeCompare(a.date)||b.id-a.id);
+  const d=state.draft; if(!d.date)d.date=localToday();
+  const targets=['<option value="">Tutte le campagne</option>'].concat(traffic.concat(leads).map(c=>'<option value="'+esc(c.name)+'"'+(d.target===c.name?" selected":"")+'>'+esc(c.name)+'</option>')).concat(sets.map(s=>'<option value="'+esc(s.name)+'"'+(d.target===s.name?" selected":"")+'>'+esc(s.name)+'</option>')).join("");
+  const tags=["Generale","Creatività","Budget","Pubblico","Idea"].map(t=>'<option'+(d.tag===t?" selected":"")+'>'+t+'</option>').join("");
+  let h='<section style="margin-top:18px"><h2>Annotazioni</h2><p class="lead">Scrivi cosa cambi e cosa pensi. Le note con la data compaiono come ◆ sul grafico, così vedi cosa è successo dopo ogni modifica.</p>'+
+    '<div class="quick" aria-label="Frasi veloci"><button data-quick="Ho cambiato la creatività di ">Ho cambiato la creatività</button><button data-quick="Ho alzato il budget di ">Ho alzato il budget</button><button data-quick="Ho messo in pausa ">Ho messo in pausa</button><button data-quick="Idea da provare: ">Idea da provare</button></div>'+
+    '<form class="nform" id="nform"><textarea id="nt" placeholder="Es. Ho messo in pausa «Alimentazione» perché i click non diventano visite." required>'+esc(d.text)+'</textarea>'+
+    '<div class="nrow"><label>Data<input id="nd" type="date" value="'+d.date+'" required></label><label>Tipo<select id="ng">'+tags+'</select></label></div>'+
+    '<label>Riguarda<select id="nc">'+targets+'</select></label>'+
+    '<div style="display:flex;gap:10px;flex-wrap:wrap"><button class="btn" type="submit">Salva nota</button>'+(notes.length?'<button class="btn soft" type="button" id="copynotes">Copia tutte</button>':'')+'</div></form></section>';
+  h+='<section style="margin-top:20px">'+(notes.length?notes.map(n=>'<article class="note-item"><div class="nh"><span class="nd">'+dm(n.date)+'/'+n.date.slice(0,4)+'</span><span style="display:flex;align-items:center;gap:6px"><span class="chip i">'+esc(n.tag)+'</span><button class="del" data-delnote="'+n.id+'" aria-label="Elimina nota">×</button></span></div><p>'+esc(n.text)+'</p>'+(n.target?'<div class="nm">Riguarda: '+esc(n.target)+'</div>':'')+'</article>').join(""):'<div class="card mute">Nessuna nota ancora. La prima volta che cambi qualcosa, scrivilo qui: tra una settimana ti servirà.</div>')+'<p class="small mute" style="margin-top:12px">Le note restano su questo dispositivo.</p></section>';
+  return h;
+}
+
+/* ================= PAGINA 4 · CHIEDI ALL'AI ================= */
+const chat={msgs:(function(){const v=store.get("sfm-c",[]);return Array.isArray(v)?v.filter(m=>m&&(m.r==="user"||m.r==="assistant")&&typeof m.t==="string").slice(-12):[];})(),busy:false,draft:"",err:"",ctl:null};
+const saveChat=()=>store.set("sfm-c",chat.msgs.slice(-12));
+function buildContext(){
+  const L=[], lastDay=END;
+  const sumLine=(label,x)=>label+": spesa "+eur(x.sp)+", visite "+num(x.rs)+", follower "+num(x.fw)+", costo per follower "+(x.cpf!=null?cents(x.cpf):"n/d")+", costo per visita "+(x.cpv!=null?cents(x.cpv):"n/d")+", tasso di follow "+(x.fr!=null?pct(x.fr,0):"n/d")+", CPM "+(x.cpm!=null?eur(x.cpm):"n/d")+", CTR "+(x.ctr!=null?pct(x.ctr,1):"n/d");
+  L.push("Ultimo giorno con dati: "+END+" (oggi è "+localToday()+"). Obiettivo: "+cents(GOAL.followerMin)+" – "+cents(GOAL.followerMax)+" a follower.");
+  L.push("");L.push("TOTALE CAMPAGNE DI TRAFFICO");
+  L.push(sumLine("Ultimo giorno ("+END+")",agg(trafficRows,END,END)));
+  L.push(sumLine("Ultimi 7 giorni",agg(trafficRows,addDays(END,-6),END)));
+  L.push(sumLine("7 giorni precedenti",agg(trafficRows,addDays(END,-13),addDays(END,-7))));
+  L.push(sumLine("14-21 giorni fa",agg(trafficRows,addDays(END,-20),addDays(END,-14))));
+  L.push(sumLine("Ultimi 30 giorni",agg(trafficRows,addDays(END,-29),END)));
+  L.push(sumLine("Da sempre",agg(trafficRows,START,END)));
+  L.push("");L.push("GIORNO PER GIORNO (ultimi 14 giorni)");
+  for(let i=13;i>=0;i--){const d=addDays(END,-i),g=agg(trafficRows,d,d);L.push(dm(d)+": spesa "+eur(g.sp)+", visite "+num(g.rs)+", follower "+num(g.fw)+(g.cpf!=null?", costo per follower "+cents(g.cpf):""));}
+  L.push("");L.push("CAMPAGNE");
+  camps.forEach(c=>{const a=agg(c.rows,addDays(END,-6),END),t=agg(c.rows,START,END);L.push("- "+c.name+" ("+(c.type==="lead"?"candidature":"traffico")+", "+(c.status==="ACTIVE"?"attiva":"in pausa")+") · ultimi 7 giorni: spesa "+eur(a.sp)+", "+(c.type==="lead"?"candidature "+num(a.rs):"follower "+num(a.fw)+", costo per follower "+(a.cpf!=null?cents(a.cpf):"n/d"))+" · da sempre: spesa "+eur(t.sp)+(c.type==="lead"?"":", follower "+num(t.fw)+", costo per follower "+(t.cpf!=null?cents(t.cpf):"n/d")));});
+  L.push("");L.push("GRUPPI DI ANNUNCI (della campagna di traffico)");
+  sets.forEach(s=>{
+    const age=diff(END,s.created),w=agg(s.rows,addDays(END,-6),END),p=agg(s.rows,addDays(END,-13),addDays(END,-7)),t=agg(s.rows,START,END);
+    L.push("- «"+s.name+"» · "+(s.status==="ACTIVE"?"attivo":"in pausa")+" · budget "+eur(s.budget)+"/giorno · creato il "+s.created+" ("+(age<0?"non ancora partito":age+" giorni")+(age>=0&&age<3?", ancora in apprendimento":"")+")");
+    L.push("    "+sumLine("ultimi 7 giorni",w));
+    L.push("    7 giorni precedenti: costo per follower "+(p.cpf!=null?cents(p.cpf)+" su "+eur(p.sp):"n/d")+" · da sempre: spesa "+eur(t.sp)+", follower "+num(t.fw)+", costo per follower "+(t.cpf!=null?cents(t.cpf):"n/d"));
+  });
+  try{const adv=buildAdvice(range(7));L.push("");L.push("CONSIGLI CHE LA PAGINA MOSTRA ORA (ultimi 7 giorni)");adv.forEach(a=>L.push("- "+a.t+" — "+a.why));}catch(e){}
+  const notes=noteList().slice().sort((a,b)=>b.date.localeCompare(a.date)).slice(0,10);
+  if(notes.length){L.push("");L.push("NOTE DI ANDREA (cosa ha cambiato)");notes.forEach(n=>L.push("- "+n.date+" · "+n.tag+(n.target?" · "+n.target:"")+": "+n.text));}
+  return L.join("\n");
+}
+function fmt(t){
+  const inl=s=>esc(s).replace(/\*\*(.+?)\*\*/g,"<b>$1</b>");
+  let out="",list=null;
+  const close=()=>{if(list){out+="</"+list+">";list=null;}};
+  String(t).replace(/\r/g,"").split("\n").forEach(l=>{
+    const m=l.match(/^\s*(?:[-•*]|\d+[.)])\s+(.*)$/);
+    if(m){const tag=/^\s*\d/.test(l)?"ol":"ul";if(list!==tag){close();out+="<"+tag+">";list=tag;}out+="<li>"+inl(m[1])+"</li>";}
+    else if(!l.trim())close();
+    else{close();out+="<p>"+inl(l)+"</p>";}
+  });
+  close();return out;
+}
+const AIERR={
+  not_granted:"Hai negato il permesso all'AI. Puoi riattivarlo dal menu Permessi di questa pagina.",
+  rate_limited:"Troppe domande di fila. Aspetta un minuto e riprova.",
+  no_key:"Manca la chiave dell'AI su Vercel. Segui il passo «Attivare Chiedi all'AI» nel README.",
+  offline:"Da qui l'AI non è raggiungibile. Funziona dalla pagina online su Vercel."
+};
+function aiErrText(e){
+  const c=e&&e.code,st=e&&e.status,d=String(e&&e.detail||"");
+  if(AIERR[c])return AIERR[c];
+  if(c==="upstream"){
+    if(st===401||st===403)return "La chiave dell'AI non è valida o non ha i permessi. Creane una nuova su console.anthropic.com e rimettila su Vercel.";
+    if(/credit|balance|billing/i.test(d))return "Sul tuo account Anthropic non c'è credito: aggiungilo in Billing su console.anthropic.com e riprova.";
+    if(st===404||/model/i.test(d))return "Il modello dell'AI non è disponibile con questa chiave. Dettaglio: "+d;
+    if(st===529||/overload/i.test(d))return "I server dell'AI sono sovraccarichi. Riprova tra un minuto.";
+    return "L'AI ha rifiutato la richiesta"+(st?" (errore "+st+")":"")+(d?": "+d:".");
+  }
+  if(c==="timeout")return "L'AI ci ha messo troppo. Riprova con una domanda più corta.";
+  return "L'AI non ha risposto"+(c?" ("+c+")":"")+(d?": "+d:"")+". Riprova tra poco.";
+}
+async function askEngine(msgs,signal){
+  while(msgs.length&&msgs[0].r!=="user")msgs=msgs.slice(1);
+  const ctx=buildContext();
+  let sample=null;
+  try{if(window.claude&&typeof window.claude.use==="function")sample=await window.claude.use("sample");}catch(e){sample=null;}
+  if(sample&&window.KB){
+    const head="[ISTRUZIONI E CONOSCENZA]\n"+window.KB+"\n\n[DATI AGGIORNATI]\n"+ctx+"\n\n[CONVERSAZIONE]\nRispondi all'ultima domanda di Andrea seguendo le istruzioni.\n\n";
+    const out=await sample(msgs.map((m,i)=>({role:m.r,content:(i===0?head:"")+m.t})),{cache:false,signal});
+    const t=String(out&&out.text||"").trim();
+    if(!t)throw {code:"empty"};
+    return t;
+  }
+  let r;
+  try{r=await fetch("api/ask",{method:"POST",headers:{"content-type":"application/json"},body:JSON.stringify({messages:msgs.map(m=>({role:m.r,content:m.t})),context:ctx}),signal});}
+  catch(e){if(e&&e.name==="AbortError")throw e;throw {code:"offline"};}
+  let j=null;try{j=await r.json();}catch(e){}
+  if(!r.ok||!j||!j.text)throw {code:(j&&j.error)||(r.status===404?"offline":"server"),status:j&&j.status,detail:j&&j.detail};
+  return String(j.text).trim();
+}
+async function sendQ(q){
+  q=String(q||"").trim();
+  if(!q||chat.busy)return;
+  chat.err="";chat.msgs.push({r:"user",t:q});chat.draft="";chat.busy=true;saveChat();render();scrollChat();
+  const ctl=new AbortController();chat.ctl=ctl;
+  try{
+    const t=await askEngine(chat.msgs.slice(-8),ctl.signal);
+    if(chat.ctl!==ctl)return;
+    chat.msgs.push({r:"assistant",t});
+  }catch(e){
+    if(chat.ctl!==ctl)return;
+    chat.msgs.pop();chat.draft=q;chat.err=aiErrText(e);
+  }
+  chat.busy=false;chat.ctl=null;saveChat();
+  if(state.tab==="ai"){render();scrollChat();}
+}
+function scrollChat(){requestAnimationFrame(()=>{const el=document.getElementById("chat-end");if(el)el.scrollIntoView({block:"end",behavior:"smooth"});});}
+function pageAI(){
+  const sug=["Cosa spengo oggi?","Perché il costo per follower sta salendo?","Posso alzare il budget a qualche gruppo?","Che creatività provo adesso?","Come funziona la fase di apprendimento?","Spiegami questa pagina in 30 secondi"];
+  let h='<section style="margin-top:18px"><h2>Chiedi all\'AI</h2><p class="lead">Conosce il tuo obiettivo ('+Math.round(GOAL.followerMin*100)+'–'+Math.round(GOAL.followerMax*100)+' cent a follower), le regole delle ads Aura e i numeri di questa pagina. Non cambia nulla su Meta: ti dice cosa fare e decidi tu.</p>';
+  if(!chat.msgs.length)h+='<div class="sugg" aria-label="Domande veloci">'+sug.map(q=>'<button data-ask="'+esc(q)+'"'+(chat.busy?' disabled':'')+'>'+esc(q)+'</button>').join("")+'</div>';
+  h+='<div class="chat" aria-live="polite">'+chat.msgs.map(m=>m.r==="user"
+    ?'<div class="msg me"><div class="bub">'+esc(m.t)+'</div></div>'
+    :'<div class="msg ai"><span class="who">AI</span><div class="bub">'+fmt(m.t)+'</div></div>').join("")+
+    (chat.busy?'<div class="msg ai"><span class="who">AI</span><div class="bub typing">Sto guardando i tuoi numeri…</div></div>':'')+
+    '<div id="chat-end"></div></div>';
+  if(chat.err)h+='<p class="note warn" style="margin-bottom:10px">'+esc(chat.err)+'</p>';
+  h+='<form class="aform" id="aform"><textarea id="aq" rows="2" placeholder="Scrivi la tua domanda… (es. «Il gruppo Alimentazione conviene tenerlo?»)">'+esc(chat.draft)+'</textarea>'+
+    '<div class="arow"><button class="btn" type="submit"'+(chat.busy?' disabled':'')+'>Invia</button>'+(chat.msgs.length||chat.busy?'<button class="btn soft" type="button" id="anew">Nuova chat</button>':'')+'</div></form>'+
+    (chat.msgs.length&&!chat.busy?'<div class="sugg" style="margin-top:14px">'+sug.slice(0,3).map(q=>'<button data-ask="'+esc(q)+'">'+esc(q)+'</button>').join("")+'</div>':'')+
+    '<p class="small mute" style="margin-top:14px">Le risposte sono consigli basati sui dati di questa pagina, non certezze. La conversazione resta su questo dispositivo.</p></section>';
+  return h;
+}
+
+/* ================= render ================= */
+function render(){
+  applyTheme();
+  const R=range(state.p);
+  let h='<header class="top"><div class="brand">Aura Club<span>Social funnel · dati al '+dm(END)+'</span></div><button class="modebtn" id="themebtn" aria-label="'+(isDark()?"Passa alla modalità giorno":"Passa alla modalità notte")+'">'+(isDark()?"☀ Giorno":"☾ Notte")+'</button></header>';
+  h+='<nav class="tabs" aria-label="Pagine">'+[["oggi","Oggi"],["dettagli","Dettagli"],["note","Note"],["ai","Chiedi AI"]].map(t=>'<button class="tab" data-tab="'+t[0]+'"'+(state.tab===t[0]?' aria-current="page"':'')+'>'+t[1]+'</button>').join("")+'</nav>';
+  if(state.tab==="oggi"||state.tab==="dettagli")h+='<nav class="pills" aria-label="Periodo">'+[1,7,14,30,0,"c"].map(p=>'<button class="pill" data-p="'+p+'" aria-pressed="'+(state.p===p)+'">'+PLABEL[p]+'</button>').join("")+'</nav>'+(state.p==="c"?rangePanel(R):'');
+  h+=state.tab==="oggi"?pageOggi(R):state.tab==="dettagli"?pageDettagli(R):state.tab==="ai"?pageAI():pageNote();
+  h+='<footer>Si aggiorna ogni giorno da solo · '+esc(D.account.name)+'</footer>';
+  const y=window.scrollY;
+  app.innerHTML=h;
+  window.scrollTo(0,y);
+  bindChart();
+}
+function go(tab){state.tab=tab;try{history.replaceState(null,"","#"+tab);}catch(e){}render();window.scrollTo(0,0);}
+
+app.addEventListener("click",e=>{
+  let t=e.target.closest("[data-tab]");if(t){go(t.getAttribute("data-tab"));return;}
+  t=e.target.closest("[data-p]");if(t){const v=t.getAttribute("data-p");state.p=v==="c"?"c":parseInt(v,10);store.set("sfm-p",state.p);render();return;}
+  t=e.target.closest("[data-rq]");if(t){setRange(...quickRange(t.getAttribute("data-rq")));return;}
+  t=e.target.closest("[data-ask]");if(t){if(!t.disabled)sendQ(t.getAttribute("data-ask"));return;}
+  if(e.target.closest("#anew")){if(chat.ctl)chat.ctl.abort();chat.ctl=null;chat.busy=false;chat.msgs=[];chat.err="";chat.draft="";saveChat();render();return;}
+  if(e.target.closest("#themebtn")){state.theme=isDark()?"light":"dark";store.set("sfm-t",state.theme);render();return;}
+  t=e.target.closest("[data-delnote]");if(t){const id=parseInt(t.getAttribute("data-delnote"),10);store.set("sfm-n",noteList().filter(n=>n.id!==id));render();return;}
+  t=e.target.closest("[data-quick]");if(t){const ta=document.getElementById("nt");ta.value=t.getAttribute("data-quick");state.draft.text=ta.value;ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);return;}
+  if(e.target.closest("#copynotes")){
+    const txt=noteList().slice().sort((a,b)=>b.date.localeCompare(a.date)).map(n=>n.date+" · "+n.tag+(n.target?" · "+n.target:"")+"\n"+n.text).join("\n\n");
+    try{navigator.clipboard.writeText(txt).then(()=>{e.target.textContent="Copiato ✓";},()=>{e.target.textContent="Copia non riuscita";});}catch(err){e.target.textContent="Copia non riuscita";}
+  }
+});
+app.addEventListener("input",e=>{if(e.target.id==="nt")state.draft.text=e.target.value;if(e.target.id==="aq")chat.draft=e.target.value;});
+app.addEventListener("keydown",e=>{if(e.target.id==="aq"&&e.key==="Enter"&&!e.shiftKey&&window.matchMedia&&matchMedia("(pointer:fine)").matches){e.preventDefault();sendQ(e.target.value);}});
+app.addEventListener("change",e=>{
+  if(e.target.id==="rf"||e.target.id==="rt"){let f=document.getElementById("rf").value,t=document.getElementById("rt").value;if(!f||!t)return;if(f>t){if(e.target.id==="rf")t=f;else f=t;}setRange(f,t);return;}
+  if(e.target.id==="ng")state.draft.tag=e.target.value;
+  if(e.target.id==="nc")state.draft.target=e.target.value;
+  if(e.target.id==="nd")state.draft.date=e.target.value;
+});
+app.addEventListener("submit",e=>{
+  if(e.target.id==="aform"){e.preventDefault();sendQ(document.getElementById("aq").value);return;}
+  if(e.target.id!=="nform")return;
+  e.preventDefault();
+  const text=document.getElementById("nt").value.trim(),date=document.getElementById("nd").value;
+  if(!text||!date)return;
+  const list=noteList();list.push({id:Date.now(),date,text,tag:state.draft.tag,target:state.draft.target});
+  store.set("sfm-n",list);state.draft={text:"",tag:"Generale",target:"",date:""};render();
+});
+app.addEventListener("toggle",e=>{const k=e.target.getAttribute&&e.target.getAttribute("data-key");if(k)state.open[k]=e.target.open;},true);
+window.addEventListener("hashchange",()=>{const h=(location.hash||"").slice(1);if(TABS.includes(h)&&h!==state.tab){state.tab=h;render();}});
+render();
+})();
+
+</script>
+</body>
+</html>
